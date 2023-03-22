@@ -1,0 +1,31 @@
+<launch>
+
+    <group>
+        <!-- argumentos -->
+        <arg name="debug" default="False"/>
+        <arg name="show" default="False"/>
+
+        <!-- Nodes -->
+        <node pkg="vision_module" name="segment" type="segment" output="screen"/>
+        <node pkg="vision_module" name="kalman" type="kalman" output="screen" />
+                
+        <!-- Parametros -->
+
+        <param name="/debug" value="$(arg debug)"/>
+
+        <group if="$(eval arg('debug') ==True)">
+            <node pkg="vision_module" type="tune" name="tune" output="screen"/>
+            <node pkg="vision_module" name="display" type="display" output="screen" />
+        </group>
+
+        <group if="$(eval arg('show') ==True)">
+            <node pkg="vision_module" name="display" type="display" output="screen" />
+        </group>
+
+        <param name="/kernel_size" value="5" />
+        
+        <rosparam file="$(find vision_module)/cfg/hsv_params.yaml" />
+
+    </group>
+    
+</launch>   

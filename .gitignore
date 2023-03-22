@@ -1,0 +1,6 @@
+**.pdf
+**.jpg
+build/
+devel/
+.vscode
+.catkin_workspace
